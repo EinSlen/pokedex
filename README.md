@@ -1,4 +1,4 @@
-# pokedex
+# Réalisation d'un pokédex
 Réalisation d’une webapp avec Flask
 
 • Développer une appli web en Python en utilisant le framework Flask
