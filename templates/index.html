@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pokédex</title>
+        <link href="styles/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    </head>
+
+    <body>
+
+        <h1>Réalisation d'un Pokédex à l'aide de l'API PokéAPI</h1>
+
+        <h2>Utilisation de l'API PokéAPI</h2>
+
+        <img src="styles/img/pokeapi.png" id="img_pokedex">
+
+    <form method="POST" action="/">
+        <div class="field">
+            <label>Nom du Pokemon :</label>
+            {{ form.csrf_token }}
+        <div class="field">
+            {{ form.name.label }} : {{ form.name() }}
+        </div>
+
+        </div>
+        <input class="button is-success is-small" type="submit" value="Go">
+    </form>
+
+        {% if reponse %}
+        <h3>Informations du pokémon :</h3>
+        <p>
+            {% if reponse == 404 %}
+                <p>Le pokemon demandé n'existe pas...</p>
+            {% else %}
+                <div>
+                    <br/>
+                    Nom : {{reponse['name']}}
+                    <br/>
+                    Image :
+                    <img src="{{reponse['image']}}" />
+                    <br/>
+                    Type :
+                    {%for i in range(reponse['types'].__len__())%}
+                        {{reponse['types'][i]['name']}}
+                     {% endfor %}
+                    <br/>
+                    Image :
+
+                        {%for i in range(reponse['image_type'].__len__())%}
+                            <img src="{{reponse['image_type'][i]['image']}}" />
+                         {% endfor %}
+
+                    <br/>
+                    talents :
+                     {%for i in range(reponse['talents'].__len__())%}
+                            {{reponse['talents'][i]['name']}}
+                    {% endfor %}
+                    <br/>
+                    Stats :
+                     {%for talent in reponse['talents']%}
+                            {{talent}}
+                    {% endfor %}
+
+                    {{reponse['stats']}}
+                    <br/>
+                    Pokedex ID : {{reponse['pokedexId']}}
+                    <br/>
+                    Evolution : {{reponse['evolution']}}
+                    <br/>
+                    Sexe : {{reponse['sexe']}}
+                    <br/>
+                     Taille : {{reponse['height']}}
+                    <br/>
+                    Poids : {{reponse['weight']}}
+                    <br/>
+                </div>
+            {% endif %}
+        </p>
+
+    {% endif %}
+
+    </body>
+</html>

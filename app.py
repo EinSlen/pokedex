@@ -12,14 +12,19 @@ app = Flask(__name__)
 app.secret_key = "MSI c kro bien !"
 
 class PokedexForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
+    name = StringField('nom_pokemon', validators=[DataRequired()])
+
+
 
 def show(pokemon):
     r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)# put application's code here
     try :
         info = dict()
+        print(r.json()['sprites']['regular'])
+        image = r.json()['sprites']['regular']
         name = r.json()['name']['fr']
         types = r.json()['types']
+        imageType = r.json()['types']
         talents = r.json()['talents']
         stats = r.json()['stats']
         pokedexId = r.json()['pokedexId']
@@ -36,6 +41,8 @@ def show(pokemon):
         info['sexe'] = sexe
         info['height'] = height
         info['weight'] = weight
+        info['image_type'] = imageType
+        info['image'] = image
         return info
     except :
         return 404
@@ -45,8 +52,9 @@ def show(pokemon):
 def index():
     pokedex = PokedexForm()
     if pokedex.validate_on_submit():
+        print(pokedex.name.data)
         reponse = show(pokedex.name.data)
         if(reponse == 404):
-            return render_template('not_found.html')
-        return render_template('featch_reponse.html', reponse=reponse)
-    return render_template('render.html', form=pokedex)
+            return render_template('index.html', form=pokedex, reponse=404)
+        return render_template('index.html', form=pokedex, reponse=reponse)
+    return render_template('index.html', form=pokedex)
