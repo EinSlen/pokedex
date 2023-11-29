@@ -50,9 +50,8 @@ def show(pokemon):
 def index():
     pokedex = PokedexForm()
     if pokedex.validate_on_submit():
-        print(pokedex.name.data)
         reponse = show(pokedex.name.data)
         if(reponse == 404):
-            return render_template('index.html', form=pokedex, reponse=404)
+            return render_template('index.html', form=pokedex, reponse=reponse)
         return render_template('index.html', form=pokedex, reponse=reponse)
     return render_template('index.html', form=pokedex)
