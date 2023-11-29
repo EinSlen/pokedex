@@ -8,11 +8,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static_folder')
 app.secret_key = "MSI c kro bien !"
 
 class PokedexForm(FlaskForm):
-    name = StringField('nom_pokemon', validators=[DataRequired()])
+    name = StringField('Pokemon', validators=[DataRequired()])
 
 def show(pokemon):
     r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)
