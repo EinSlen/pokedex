@@ -14,10 +14,8 @@ app.secret_key = "MSI c kro bien !"
 class PokedexForm(FlaskForm):
     name = StringField('nom_pokemon', validators=[DataRequired()])
 
-
-
 def show(pokemon):
-    r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)# put application's code here
+    r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)
     try :
         info = dict()
         print(r.json()['sprites']['regular'])

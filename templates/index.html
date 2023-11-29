@@ -45,30 +45,42 @@
                         {{reponse['types'][i]['name']}}
                      {% endfor %}
                     <br/>
-                    Image :
-
+                    Image type :
                         {%for i in range(reponse['image_type'].__len__())%}
                             <img src="{{reponse['image_type'][i]['image']}}" />
                          {% endfor %}
 
                     <br/>
                     talents :
-                     {%for i in range(reponse['talents'].__len__())%}
-                            {{reponse['talents'][i]['name']}}
+                     {%for i in range(reponse['talents'].__len__()-1)%}
+                            {{reponse['talents'][i]['name']}},
+
                     {% endfor %}
+                    {{reponse['talents'][reponse['talents'].__len__()-1]['name']}}
                     <br/>
                     Stats :
-                     {%for talent in reponse['talents']%}
-                            {{talent}}
-                    {% endfor %}
-
-                    {{reponse['stats']}}
+                        {% set compte = 0 %}
+                        {% for stats_key, stats_values in reponse['stats'].items() %}
+                            {% set compte = compte + 1 %}
+                            {{stats_key}} : {{stats_values}}
+                            {% if compte%2 == 0 %}
+                                <br>
+                            {% endif %}
+                        {% endfor %}
                     <br/>
                     Pokedex ID : {{reponse['pokedexId']}}
                     <br/>
-                    Evolution : {{reponse['evolution']}}
+                        {% if reponse['evolution']['pre'] != None%}
+                            Evolution pre : {{ reponse['evolution']['pre'][0]['name'] }}
+                        {% endif %}
+                        {% if reponse['evolution']['next'] != None %}
+                            Evolution next : {{reponse['evolution']['next'][0]['name']}}
+                        {% endif %}
                     <br/>
-                    Sexe : {{reponse['sexe']}}
+                    Sexe :
+                        {% for sexe_key, sexe_values in reponse['sexe'].items() %}
+                            {{sexe_key}} : {{sexe_values}}
+                        {% endfor %}
                     <br/>
                      Taille : {{reponse['height']}}
                     <br/>
