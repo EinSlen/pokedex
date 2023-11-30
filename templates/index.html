@@ -55,16 +55,21 @@
                         {{reponse['talents'][reponse['talents'].__len__()-1]['name']}}
                     </div>
                   </div>
-                {% if reponse['evolution']['pre'] != None%}
-                    <p>Evolution pre: {{ reponse['evolution']['pre'][0]['name'] }}</p>
-                {% endif %}
-                {% if reponse['evolution']['next'] != None %}
-                    <p>Evolution next: {{reponse['evolution']['next'][0]['name']}}</p>
+                {% if reponse['evolution'] != None%}
+
+                    {% if reponse['evolution']['pre'] != None %}
+                         <p>Evolution pre: {{ reponse['evolution']['pre'][0]['name'] }}</p>
+                    {% endif %}
+                     {% if reponse['evolution']['next'] != None %}
+                         <p>Evolution next: {{reponse['evolution']['next'][0]['name']}}</p>
+                    {% endif %}
                 {% endif %}
                 <p>Sexe:</p>
-                {% for sexe_key, sexe_values in reponse['sexe'].items() %}
-                    <p>{{sexe_key}} : {{sexe_values}}</p>
-                {% endfor %}
+                {% if reponse['sexe'] != None %}
+                    {% for sexe_key, sexe_values in reponse['sexe'].items() %}
+                        <p>{{sexe_key}} : {{sexe_values}}</p>
+                    {% endfor %}
+                {% endif %}
                 <p>Taille: {{reponse['height']}}</p>
                 <p>Poids: {{reponse['weight']}}</p>
             </div>
@@ -89,6 +94,7 @@
         </div>
         {% endif %}
     </p>
+    <p>{{reponse['name']}}</p>
     {% endif %}
 </body>
 </html>
