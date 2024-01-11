@@ -73,14 +73,14 @@
                 <p>Poids: {{reponse['weight']}}</p>
             </div>
             <div class="middle-section">
-                <button id="shiny-button"> shiny</button>
+                Shiny :
+                <button id="shiny-button">✨</button>
                 <script>
                     var regularImage = "{{reponse['image']}}";
                     var shinyImage = "{{reponse['shiny']}}";
                 </script>
                 <script src="static_folder/js/app.js"></script>
                 <img class="pokemon-image" src="{{reponse['image']}}" alt="{{reponse['name']}}" />
-
 
             </div>
             <div class="right-section">
