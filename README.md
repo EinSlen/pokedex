@@ -1,3 +1,11 @@
+# Lancement du projet
+
+`python3 -m venv .venv`
+
+`source .venv/bin/activate`
+
+`pip install -r requirements.txt`
+
 # Réalisation d'un pokédex
 Réalisation d’une webapp avec Flask
 
