@@ -17,7 +17,7 @@
 
     <form method="POST" action="/">
         <div class="field">
-            <label>Nom du Pokemon :</label>
+            <label>Nom du Pokemon ou son ID:</label>
             {{ form.csrf_token }}
             <div class="field">
                 {{ form.name.label }} : {{ form.name() }}
@@ -85,7 +85,18 @@
                             {% for stats_key, stats_values in reponse['stats'].items() %}
                                 <div class="stat">{{ stats_key }}: {{ stats_values }}</div>
                             {% endfor %}
+                            <br/>
+
                         </div>
+                          <div>
+                                 <br/>
+                            Son :
+                                  {% if reponse['son'] != 404 %}
+                                <audio controls src="{{reponse['son']}}"></audio>
+                            {% else %}
+                                <p>Pas de son</p>
+                            {% endif %}
+                            </div>
                     </div>
                 {% else %}
                     <p>Aucune stats disponible.</p>
