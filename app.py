@@ -78,5 +78,5 @@ def index():
         reponse = show(pokedex.name.data)
         if(reponse == 404):
             return render_template('index.html', form=pokedex, reponse=reponse)
-        return render_template('index.html', form=pokedex, reponse=reponse)
+        return render_template('render.html', form=pokedex, reponse=reponse)
     return render_template('index.html', form=pokedex)
