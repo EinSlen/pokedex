@@ -67,7 +67,7 @@
                 <p>Sexe:</p>
                 {% if reponse['sexe'] != None %}
                     {% for sexe_key, sexe_values in reponse['sexe'].items() %}
-                        <p>{{sexe_key}} : {{sexe_values}}</p>
+                        <p>{{sexe_key}} : {{sexe_values}}%</p>
                     {% endfor %}
                 {% endif %}
                 <p>Taille: {{reponse['height']}}</p>
@@ -92,6 +92,8 @@
                                  <br/>
                             Son :
                                   {% if reponse['son'] != 404 %}
+                              <br/>
+                               <br/>
                                 <audio controls src="{{reponse['son']}}"></audio>
                             {% else %}
                                 <p>Pas de son</p>
