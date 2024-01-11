@@ -31,8 +31,8 @@ def show(pokemon):
         sexe = r.json()['sexe']
         height = r.json()['height']
         weight = r.json()['weight']
-        print(name)
-        son = storeAudio(name)
+        print(name.lower())
+        son = storeAudio(name.lower())
         info['name'] = name
         info['types'] = types
         info['talents'] = talents
