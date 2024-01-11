@@ -1,0 +1,83 @@
+tml{
+background-color : white;
+
+}
+
+body {
+    margin-left : 100px ;
+    margin-right : 100px ;
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+}
+.pokemon-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.left-section,
+.right-section,
+.middle-section {
+    flex-basis: calc(33.33% - 20px); /* 33.33% with margin */
+    box-sizing: border-box;
+}
+
+/* Additional styling for better appearance */
+.left-section,
+.right-section,
+.middle-section {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.top-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.stat {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+}
+
+#img_pokedex {
+    width: 200px;
+    height: auto;
+    margin: 0px 0px 10px 0px;
+}
+
+.button-12 {
+
+      margin: auto;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  background: #6E6D70;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+  color: #DFDEDF;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-12:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}

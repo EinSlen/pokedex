@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pokédex</title>
+    <link href="static_folder/styles/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
-<body>
 
+<body>
+    <h1>Réalisation d'un Pokédex à l'aide de l'API PokéAPI</h1>
+
+    <h2>Utilisation de l'API PokéAPI</h2>
+    <br>
+    <img src="static_folder/styles/img/pokeapi.png" id="img_pokedex">
+    <br>
+
+    <form method="POST" action="/">
+        <div class="field">
+            <label>Nom du Pokemon ou son ID:</label>
+            {{ form.csrf_token }}
+            <div class="field">
+                {{ form.name.label }} : {{ form.name() }}
+            </div>
+        </div>
+        <input class="button-12" type="submit" value="Rechercher">
+    </form>
+
+    {% if reponse %}
+    <br/>
+    <h3>Informations du pokémon :</h3>
+    <p>
+        {% if reponse == 404 %}
+        <p>Le pokemon demandé n'existe pas...</p>
+        {% else %}
+        <div class="pokemon-details">
+            <div class="left-section">
+                <p>Pokedex ID: {{reponse['pokedexId']}}</p>
+                <br/>
+                {%for i in range(reponse['image_type'].__len__())%}
+                            <img src="{{reponse['image_type'][i]['image']}}" />
+                         {% endfor %}
+                <br/>
+                Types :
+                {%for i in range(reponse['types'].__len__())%}
+                        {{reponse['types'][i]['name']}}
+                     {% endfor %}
+                <br/>
+                talents :
+                  <div class="flex-container">
+                    <div class="stat">
+                         {%for i in range(reponse['talents'].__len__()-1)%}
+                                {{reponse['talents'][i]['name']}} |
+                        {% endfor %}
+                        {{reponse['talents'][reponse['talents'].__len__()-1]['name']}}
+                    </div>
+                  </div>
+                {% if reponse['evolution'] != None%}
+
+                    {% if reponse['evolution']['pre'] != None %}
+                         <p>Evolution pre: {{ reponse['evolution']['pre'][0]['name'] }}</p>
+                    {% endif %}
+                     {% if reponse['evolution']['next'] != None %}
+                         <p>Evolution next: {{reponse['evolution']['next'][0]['name']}}</p>
+                    {% endif %}
+                {% endif %}
+                <p>Sexe:</p>
+                {% if reponse['sexe'] != None %}
+                    {% for sexe_key, sexe_values in reponse['sexe'].items() %}
+                        <p>{{sexe_key}} : {{sexe_values}}%</p>
+                    {% endfor %}
+                {% endif %}
+                <p>Taille: {{reponse['height']}}</p>
+                <p>Poids: {{reponse['weight']}}</p>
+            </div>
+            <div class="middle-section">
+                <button id="shiny-button"> shiny</button>
+                <script>
+                    var regularImage = "{{reponse['image']}}";
+                    var shinyImage = "{{reponse['shiny']}}";
+                </script>
+                <script src="static_folder/js/app.js"></script>
+                <img class="pokemon-image" src="{{reponse['image']}}" alt="{{reponse['name']}}" />
+
+
+            </div>
+            <div class="right-section">
+                <p>Stats:</p>
+                <br/>
+                {% if reponse['stats'] != None %}
+                    <div class="flex-container">
+                        <div class="top-stats">
+                            {% for stats_key, stats_values in reponse['stats'].items() %}
+                                <div class="stat">{{ stats_key }}: {{ stats_values }}</div>
+                            {% endfor %}
+                            <br/>
+
+                        </div>
+                          <div>
+                                 <br/>
+                            Son :
+                                  {% if reponse['son'] != 404 %}
+                              <br/>
+                               <br/>
+                                <audio controls src="{{reponse['son']}}"></audio>
+                            {% else %}
+                                <p>Pas de son</p>
+                            {% endif %}
+                            </div>
+                    </div>
+                {% else %}
+                    <p>Aucune stats disponible.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </p>
+    <p>{{reponse['name']}}</p>
+    {% endif %}
 </body>
 </html>
