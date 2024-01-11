@@ -21,6 +21,8 @@ def show(pokemon):
         info = dict()
         print(r.json()['sprites']['regular'])
         image = r.json()['sprites']['regular']
+        print(r.json()['sprites']['shiny'])
+        shiny = r.json()['sprites']['shiny']
         name = r.json()['name']['fr']
         types = r.json()['types']
         imageType = r.json()['types']
@@ -45,6 +47,7 @@ def show(pokemon):
         info['image_type'] = imageType
         info['image'] = image
         info['son'] = son
+        info['shiny'] = shiny
         return info
     except :
         return 404
