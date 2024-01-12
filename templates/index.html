@@ -38,30 +38,29 @@
                 <p>Pokedex ID: {{reponse['pokedexId']}}</p>
                 <br/>
                 {%for i in range(reponse['image_type'].__len__())%}
-                            <img src="{{reponse['image_type'][i]['image']}}" />
-                         {% endfor %}
+                    <img src="{{reponse['image_type'][i]['image']}}" />
+                {% endfor %}
                 <br/>
                 Types :
                 {%for i in range(reponse['types'].__len__())%}
-                        {{reponse['types'][i]['name']}}
-                     {% endfor %}
+                    {{reponse['types'][i]['name']}}
+                {% endfor %}
                 <br/>
                 talents :
-                  <div class="flex-container">
+                <div class="flex-container">
                     <div class="stat">
-                         {%for i in range(reponse['talents'].__len__()-1)%}
-                                {{reponse['talents'][i]['name']}} |
+                        {%for i in range(reponse['talents'].__len__()-1)%}
+                            {{reponse['talents'][i]['name']}} |
                         {% endfor %}
                         {{reponse['talents'][reponse['talents'].__len__()-1]['name']}}
                     </div>
-                  </div>
+                </div>
                 {% if reponse['evolution'] != None%}
-
                     {% if reponse['evolution']['pre'] != None %}
-                         <p>Evolution pre: {{ reponse['evolution']['pre'][0]['name'] }}</p>
+                        <p>Evolution pre: {{ reponse['evolution']['pre'][0]['name'] }}</p>
                     {% endif %}
-                     {% if reponse['evolution']['next'] != None %}
-                         <p>Evolution next: {{reponse['evolution']['next'][0]['name']}}</p>
+                    {% if reponse['evolution']['next'] != None %}
+                        <p>Evolution next: {{reponse['evolution']['next'][0]['name']}}</p>
                     {% endif %}
                 {% endif %}
                 <p>Sexe:</p>
@@ -75,14 +74,17 @@
             </div>
             <div class="middle-section">
                 <button id="shiny-button"> shiny</button>
+                {% if reponse['name'] not in favorites %}
+        <button onclick="addToFavorites('{{reponse['name']}}')">Ajouter aux favoris</button>
+    {% else %}
+        <button onclick="removeFromFavorites('{{reponse['name']}}')">Retirer des favoris</button>
+    {% endif %}
                 <script>
                     var regularImage = "{{reponse['image']}}";
                     var shinyImage = "{{reponse['shiny']}}";
                 </script>
                 <script src="static_folder/js/app.js"></script>
                 <img class="pokemon-image" src="{{reponse['image']}}" alt="{{reponse['name']}}" />
-
-
             </div>
             <div class="right-section">
                 <p>Stats:</p>
@@ -94,19 +96,18 @@
                                 <div class="stat">{{ stats_key }}: {{ stats_values }}</div>
                             {% endfor %}
                             <br/>
-
                         </div>
-                          <div>
-                                 <br/>
+                        <div>
+                            <br/>
                             Son :
-                                  {% if reponse['son'] != 404 %}
-                              <br/>
-                               <br/>
+                            {% if reponse['son'] != 404 %}
+                                <br/>
+                                <br/>
                                 <audio controls src="{{reponse['son']}}"></audio>
                             {% else %}
                                 <p>Pas de son</p>
                             {% endif %}
-                            </div>
+                        </div>
                     </div>
                 {% else %}
                     <p>Aucune stats disponible.</p>
@@ -117,5 +118,50 @@
     </p>
     <p>{{reponse['name']}}</p>
     {% endif %}
+
+    <h3>Favoris :</h3>
+    <ul id="favorites-list">
+        {% for favorite in favorites %}
+            <li>{{ favorite }}</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+    function addToFavorites(pokemonName) {
+        var favoritesList = document.getElementById('favorites-list');
+        var listItem = document.createElement('li');
+        listItem.appendChild(document.createTextNode(pokemonName));
+        favoritesList.appendChild(listItem);
+
+        var addButton = document.querySelector('button[onclick="addToFavorites(\'' + pokemonName + '\')"]');
+        if (addButton) {
+            addButton.innerHTML = "Retirer des favoris";
+            addButton.onclick = function() {
+                removeFromFavorites(pokemonName);
+            };
+        }
+    }
+
+    function removeFromFavorites(pokemonName) {
+        var favoritesList = document.getElementById('favorites-list');
+        var listItems = favoritesList.getElementsByTagName('li');
+
+        // Retirer le Pokémon de la liste des favoris
+        for (var i = 0; i < listItems.length; i++) {
+            if (listItems[i].textContent === pokemonName) {
+                favoritesList.removeChild(listItems[i]);
+                break;
+            }
+        }
+
+        var addButton = document.querySelector('button[onclick="addToFavorites(\'' + pokemonName + '\')"]');
+        if (addButton) {
+            addButton.innerHTML = "Ajouter aux favoris";
+            addButton.onclick = function() {
+                addToFavorites(pokemonName);
+            };
+        }
+    }
+</script>
 </body>
 </html>

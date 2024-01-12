@@ -1,6 +1,6 @@
 import sqlite3
 import requests as requests
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, session
 from markupsafe import escape
 from datetime import datetime, date
 import os
@@ -48,6 +48,9 @@ def show(pokemon):
         info['image'] = image
         info['son'] = son
         info['shiny'] = shiny
+        ajouter_favoris = session.get('ajouter_favoris', 0)
+        info['ajouter_favoris'] = ajouter_favoris
+
         return info
     except :
         return 404
@@ -77,9 +80,14 @@ def storeAudio(nomPokemon):
 @app.route("/", methods=['GET', 'POST'])
 def index():
     pokedex = PokedexForm()
+
+    if 'favorites' not in session:
+        session['favorites'] = []
+
     if pokedex.validate_on_submit():
         reponse = show(pokedex.name.data)
-        if(reponse == 404):
+
+        if reponse == 404:
             return render_template('index.html', form=pokedex, reponse=reponse)
-        return render_template('index.html', form=pokedex, reponse=reponse)
-    return render_template('index.html', form=pokedex)
+        return render_template('index.html', form=pokedex, reponse=reponse, favorites=session['favorites'])
+    return render_template('index.html', form=pokedex, favorites=session.get('favorites', []))
