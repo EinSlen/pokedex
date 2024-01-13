@@ -22,8 +22,8 @@ https://pokeapi.co/
 
 - SCRUM Master : Alban
 
-- Développeurs : Valentin et Ayoub
+- Développeurs : Valentin, Ayoub, Alban et Thomas
 
 - Développeur web : Théo
 
-- Responsable du merge : Thomas
+- Responsable du merge : Thomas et Alban
