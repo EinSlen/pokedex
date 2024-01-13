@@ -19,38 +19,22 @@ def show(pokemon):
     r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)
     try :
         info = dict()
-        print(r.json()['sprites']['regular'])
-        image = r.json()['sprites']['regular']
-        print(r.json()['sprites']['shiny'])
-        shiny = r.json()['sprites']['shiny']
-        name = r.json()['name']['fr']
-        types = r.json()['types']
-        imageType = r.json()['types']
-        talents = r.json()['talents']
-        stats = r.json()['stats']
-        pokedexId = r.json()['pokedexId']
-        evolution = r.json()['evolution']
-        sexe = r.json()['sexe']
-        height = r.json()['height']
-        weight = r.json()['weight']
-        print(name.lower())
-        son = storeAudio(name.lower())
+        name = r.json()['name']['fr'] 
         info['name'] = name
-        info['types'] = types
-        info['talents'] = talents
-        info['stats'] = stats
-        info['pokedexId'] = pokedexId
-        info['evolution'] = evolution
-        info['sexe'] = sexe
-        info['height'] = height
-        info['weight'] = weight
-        info['image_type'] = imageType
-        info['image'] = image
-        info['son'] = son
-        info['shiny'] = shiny
-        ajouter_favoris = session.get('ajouter_favoris', 0)
-        info['ajouter_favoris'] = ajouter_favoris
-
+        info['types'] = r.json()['types']
+        info['talents'] = r.json()['talents']
+        info['stats'] = r.json()['stats']
+        info['pokedexId'] = r.json()['pokedexId']
+        info['evolution'] = r.json()['evolution']
+        info['sexe'] = r.json()['sexe']
+        info['height'] = r.json()['height']
+        info['weight'] = r.json()['weight']
+        info['image_type'] = r.json()['types']
+        info['image'] = r.json()['sprites']['regular']
+        info['son'] = storeAudio(name.lower())
+        info['shiny'] = r.json()['sprites']['shiny']
+        info['ajouter_favoris'] = session.get('ajouter_favoris', 0)
+        
         return info
     except :
         return 404
