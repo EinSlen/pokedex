@@ -12,14 +12,16 @@ from wtforms.validators import DataRequired
 app = Flask(__name__, template_folder='templates', static_folder='static_folder')
 app.secret_key = "MSI c kro bien !"
 
+
 class PokedexForm(FlaskForm):
     name = StringField('Pokemon', validators=[DataRequired()])
 
+
 def show(pokemon):
     r = requests.get('https://api-pokemon-fr.vercel.app/api/v1/pokemon/' + pokemon)
-    try :
+    try:
         info = dict()
-        name = r.json()['name']['fr'] 
+        name = r.json()['name']['fr']
         info['name'] = name
         info['types'] = r.json()['types']
         info['talents'] = r.json()['talents']
@@ -34,10 +36,11 @@ def show(pokemon):
         info['son'] = storeAudio(name.lower())
         info['shiny'] = r.json()['sprites']['shiny']
         info['ajouter_favoris'] = session.get('ajouter_favoris', 0)
-        
+
         return info
-    except :
+    except:
         return 404
+
 
 def storeAudio(nomPokemon):
     def trouver_fichier_par_nom(nom_partiel, repertoire):

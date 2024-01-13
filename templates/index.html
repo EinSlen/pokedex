@@ -17,9 +17,10 @@
 
     <form method="POST" action="/">
         <div class="field">
+            <label>Nom du Pokemon ou son ID:</label>
             {{ form.csrf_token }}
             <div class="field">
-                {{ form.name() }}
+                {{ form.name.label }} : {{ form.name() }}
             </div>
         </div>
         <input class="button-12" type="submit" value="Rechercher">
@@ -232,7 +233,6 @@
         listItem.appendChild(document.createTextNode(favorites[i]));
         favoritesList.appendChild(listItem);
 
-        // Vérifier si le Pokémon est déjà en favori
         if (favorites[i] === '{{reponse['name']}}') {
             var addButton = document.getElementById('add-to-favorites-btn');
             if (addButton) {
