@@ -17,10 +17,9 @@
 
     <form method="POST" action="/">
         <div class="field">
-            <label>Nom du Pokemon ou son ID:</label>
             {{ form.csrf_token }}
             <div class="field">
-                {{ form.name.label }} : {{ form.name() }}
+                {{ form.name() }}
             </div>
         </div>
         <input class="button-12" type="submit" value="Rechercher">
@@ -73,7 +72,7 @@
                 <p>Poids: {{reponse['weight']}}</p>
             </div>
             <div class="middle-section">
-                <button id="shiny-button"> shiny</button>
+                <button id="shiny-button">✨</button>
                 {% if reponse['name'] not in favorites %}
         <button class="button-fav" onclick="addToFavorites('{{reponse['name']}}')" id="add-to-favorites-btn">
     <i class="fas fa-star"></i>

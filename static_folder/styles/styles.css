@@ -135,7 +135,7 @@ button i {
     font-family: 'Arial', sans-serif; /* Utilisez une police sans italique */
 }
 
-.button-fav {
+.button-fav, .shiny-button {
     background: none;
     border: none;
     cursor: pointer;
