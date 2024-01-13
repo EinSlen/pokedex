@@ -75,9 +75,13 @@
             <div class="middle-section">
                 <button id="shiny-button"> shiny</button>
                 {% if reponse['name'] not in favorites %}
-        <button onclick="addToFavorites('{{reponse['name']}}')">Ajouter aux favoris</button>
+        <button class="button-fav" onclick="addToFavorites('{{reponse['name']}}')" id="add-to-favorites-btn">
+    <i class="fas fa-star"></i>
+</button>
     {% else %}
-        <button onclick="removeFromFavorites('{{reponse['name']}}')">Retirer des favoris</button>
+        <button class="button-fav" onclick="removeFromFavorites('{{reponse['name']}}')" id="remove-from-favorites-btn">
+    <i class="fas fa-star"></i>
+</button>
     {% endif %}
                 <script>
                     var regularImage = "{{reponse['image']}}";
@@ -115,30 +119,50 @@
             </div>
         </div>
         {% endif %}
+        <p>{{reponse['name']}}</p>
+ <h3>Favoris :</h3>
+<ul id="favorites-list">
+    {% for favorite in favorites %}
+        <li>{{ favorite }}</li>
+    {% endfor %}
+</ul>
+
+<button onclick="resetFavorites()">Réinitialiser la liste des favoris</button>
+
     </p>
-    <p>{{reponse['name']}}</p>
     {% endif %}
 
-    <h3>Favoris :</h3>
-    <ul id="favorites-list">
-        {% for favorite in favorites %}
-            <li>{{ favorite }}</li>
-        {% endfor %}
-    </ul>
 
     <script>
+    // Fonction pour obtenir les favoris depuis le stockage local
+    function getFavoritesFromLocalStorage() {
+        var favorites = localStorage.getItem('favorites');
+        return favorites ? JSON.parse(favorites) : [];
+    }
+
+    // Fonction pour mettre à jour les favoris dans le stockage local
+    function updateFavoritesInLocalStorage(favorites) {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+
     function addToFavorites(pokemonName) {
         var favoritesList = document.getElementById('favorites-list');
         var listItem = document.createElement('li');
         listItem.appendChild(document.createTextNode(pokemonName));
         favoritesList.appendChild(listItem);
 
-        var addButton = document.querySelector('button[onclick="addToFavorites(\'' + pokemonName + '\')"]');
-        if (addButton) {
-            addButton.innerHTML = "Retirer des favoris";
-            addButton.onclick = function() {
-                removeFromFavorites(pokemonName);
-            };
+        var addButton = document.getElementById('add-to-favorites-btn');
+    if (addButton) {
+        addButton.innerHTML = '<i class="fas fa-star"></i>';
+        addButton.id = 'remove-from-favorites-btn';
+        addButton.onclick = function() {
+            removeFromFavorites(pokemonName);
+        };
+
+            // Mettre à jour les favoris dans le stockage local
+            var favorites = getFavoritesFromLocalStorage();
+            favorites.push(pokemonName);
+            updateFavoritesInLocalStorage(favorites);
         }
     }
 
@@ -146,7 +170,6 @@
         var favoritesList = document.getElementById('favorites-list');
         var listItems = favoritesList.getElementsByTagName('li');
 
-        // Retirer le Pokémon de la liste des favoris
         for (var i = 0; i < listItems.length; i++) {
             if (listItems[i].textContent === pokemonName) {
                 favoritesList.removeChild(listItems[i]);
@@ -154,14 +177,76 @@
             }
         }
 
-        var addButton = document.querySelector('button[onclick="addToFavorites(\'' + pokemonName + '\')"]');
-        if (addButton) {
-            addButton.innerHTML = "Ajouter aux favoris";
-            addButton.onclick = function() {
+        var removeButton = document.getElementById('remove-from-favorites-btn');
+        if (removeButton) {
+            removeButton.innerHTML = '<i class="fas fa-star"></i>';
+            removeButton.id = 'add-to-favorites-btn';
+            removeButton.onclick = function() {
                 addToFavorites(pokemonName);
             };
+
+            // Mettre à jour les favoris dans le stockage local
+            var favorites = getFavoritesFromLocalStorage();
+            var index = favorites.indexOf(pokemonName);
+            if (index !== -1) {
+                favorites.splice(index, 1);
+                updateFavoritesInLocalStorage(favorites);
+            }
         }
     }
+
+    // Charger les favoris au chargement de la page
+    window.onload = function() {
+        var favorites = getFavoritesFromLocalStorage();
+        var favoritesList = document.getElementById('favorites-list');
+
+        for (var i = 0; i < favorites.length; i++) {
+            var listItem = document.createElement('li');
+            listItem.appendChild(document.createTextNode(favorites[i]));
+            favoritesList.appendChild(listItem);
+        }
+    };
+
+    function resetFavorites() {
+    var favoritesList = document.getElementById('favorites-list');
+    favoritesList.innerHTML = ''; // Efface tous les éléments de la liste
+
+    // Réinitialiser le stockage local à un tableau vide
+    updateFavoritesInLocalStorage([]);
+
+    var addButton = document.getElementById('add-to-favorites-btn');
+    if (addButton) {
+        addButton.innerHTML = '<i class="fas fa-star"></i>';
+        addButton.id = 'add-from-favorites-btn';
+        addButton.onclick = function() {
+            var pokemonName = document.querySelector('input[name="name"]').value;
+            addToFavorites(pokemonName);
+        };
+}}
+
+    window.onload = function() {
+    var favorites = getFavoritesFromLocalStorage();
+    var favoritesList = document.getElementById('favorites-list');
+
+    for (var i = 0; i < favorites.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.appendChild(document.createTextNode(favorites[i]));
+        favoritesList.appendChild(listItem);
+
+        // Vérifier si le Pokémon est déjà en favori
+        if (favorites[i] === '{{reponse['name']}}') {
+            var addButton = document.getElementById('add-to-favorites-btn');
+            if (addButton) {
+                addButton.innerHTML = '<i class="fas fa-star"></i>';
+                addButton.id = 'remove-from-favorites-btn';
+                addButton.onclick = function() {
+                    var pokemonName = document.querySelector('input[name="name"]').value;
+                    removeFromFavorites(pokemonName);
+                };
+            }
+        }
+    }
+};
 </script>
 </body>
 </html>
