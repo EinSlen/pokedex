@@ -82,8 +82,61 @@ body {
   outline: 0;
 }
 
-shiny-button {
+#favorites-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#favorites-list li {
+    background-color: #6E6D70;
+    color: #DFDEDF;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#favorites-list li:hover {
+    background-color: #404040;
+}
+
+button i {
+    margin-right: 5px;
+}
+
+.middle-section {
+    position: relative;
+}
+
+#add-to-favorites-btn i:before {
+    content: '\2606'; /* Code unicode pour une étoile vide */
+    color: #f1c40f; /* Couleur jaune */
+    font-size: 36px; /* Taille de l'étoile (ajustez selon vos préférences) */
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px; /* Décalage vers la gauche (ajustez selon vos préférences) */
+    font-family: 'Arial', sans-serif; /* Utilisez une police sans italique */
+}
+
+/* Styles pour l'étoile pleine */
+#remove-from-favorites-btn i:before {
+    content: '\2605'; /* Code unicode pour une étoile pleine */
+    color: #f1c40f; /* Couleur jaune */
+    font-size: 36px; /* Taille de l'étoile (ajustez selon vos préférences) */
+    position: absolute;
+    top: 0;
+    right: 10px; /* Décalage vers la gauche (ajustez selon vos préférences) */
+    font-family: 'Arial', sans-serif; /* Utilisez une police sans italique */
+}
+
+.button-fav, .shiny-button {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
