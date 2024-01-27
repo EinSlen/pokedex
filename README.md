@@ -6,6 +6,8 @@
 
 `pip install -r requirements.txt`
 
+`flask --app app --debug`
+
 # Réalisation d'un pokédex
 Réalisation d’une webapp avec Flask
 
